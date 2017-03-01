@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>HelloRobot</groupId>
+    <artifactId>be.brieuc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.1</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+            <!-- regular resource processsing for everything except logback.xml -->
+
+            <!-- resource processsing with a different output directory
+                 for logback.xml -->
+            <resource>
+                <directory>src/resources/</directory>
+
+                <!-- relative to target/classes
+                     i.e. ${project.build.outputDirectory} -->
+                <!--<targetPath>..</targetPath>-->
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <!--<manifest>-->
+                            <!--<mainClass>adafruit.MotorHatExample</mainClass>-->
+                        <!--</manifest>-->
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+
+                    </archive>
+
+                    <includes>
+                        <include>src/resources/</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+
+                    <archive>
+                        <manifest>
+                            <mainClass>adafruit.MotorHatExample</mainClass>
+                        </manifest>
+                    </archive>
+
+                </configuration>
+            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-dependency-plugin</artifactId>-->
+            <!--<version>2.8</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>copy-dependencies</id>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>copy-dependencies</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<outputDirectory>-->
+            <!--${project.build.directory}/libs/-->
+            <!--</outputDirectory>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+
+</project>
