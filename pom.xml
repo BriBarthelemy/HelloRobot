@@ -7,7 +7,24 @@
     <groupId>HelloRobot</groupId>
     <artifactId>be.brieuc</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>I need a funny name.</name>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+    </properties>
+
+
+
     <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
@@ -37,6 +54,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
                     <archive>
                         <!--<manifest>-->
@@ -74,6 +92,10 @@
 
                 </configuration>
             </plugin>
+
+
+
+
             <!--<plugin>-->
             <!--<groupId>org.apache.maven.plugins</groupId>-->
             <!--<artifactId>maven-dependency-plugin</artifactId>-->
