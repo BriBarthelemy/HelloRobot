@@ -1,5 +1,6 @@
 package opencv;
 
+import opencv.interfaces.iOpenCV;
 import org.apache.log4j.Logger;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -28,6 +29,9 @@ public class OpenCVImpl implements iOpenCV {
     // OpenCV object that performs the video capture.
     private VideoCapture videoCapture;
 
+    private int frameWidth;
+    private int frameHeight;
+
     private ArrayList<Rect> detectedObjects = new ArrayList<>();
 
     private boolean cameraActive;
@@ -35,15 +39,25 @@ public class OpenCVImpl implements iOpenCV {
     // face cascade classifier
     private CascadeClassifier cascadeClassifier;
     private int absoluteFaceSize;
+    private static OpenCVImpl Instance;
 
+    public static OpenCVImpl getInstance(){
+        System.out.println("Getting OpenCV instance.");
+        if(Instance==null){
+            System.out.println("OpenCV was null...");
+            Instance = new OpenCVImpl();
+            return Instance;
+        }
+        return Instance;
+    }
 
-    public OpenCVImpl(){
+    private OpenCVImpl(){
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
 
     /**
-     * inits the openCV impl with default presets.
+     * inits the Instance impl with default presets.
      * This will detect faces.
      */
     public void init(){
@@ -69,10 +83,12 @@ public class OpenCVImpl implements iOpenCV {
             if(videoCapture.isOpened()){
                 this.cameraActive=true;
 
-                Runnable frameGrabber = this::grabFrame;
+                Mat frame = grabFrame();
+                this.frameWidth = frame.width();
+                this.frameHeight = frame.height();
 
                 this.timer = Executors.newSingleThreadScheduledExecutor();
-                this.timer.scheduleAtFixedRate(frameGrabber,0,33, TimeUnit.MILLISECONDS);
+                this.timer.scheduleAtFixedRate(this::grabFrame,0,33, TimeUnit.MILLISECONDS);
             }
 
 
@@ -171,6 +187,13 @@ public class OpenCVImpl implements iOpenCV {
     }
 
 
+    @Override
+    public int getFrameWidth() {
+        return frameWidth;
+    }
 
-
+    @Override
+    public int getFrameHeight() {
+        return frameHeight;
+    }
 }

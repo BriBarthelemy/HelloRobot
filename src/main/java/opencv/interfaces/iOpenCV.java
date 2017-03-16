@@ -1,4 +1,4 @@
-package opencv;
+package opencv.interfaces;
 
 import org.opencv.core.Rect;
 
@@ -19,4 +19,8 @@ public interface iOpenCV {
     int getCountDetectedObjects();
 
     ArrayList<Rect> getObjects();
+
+    int getFrameWidth();
+
+    int getFrameHeight();
 }
